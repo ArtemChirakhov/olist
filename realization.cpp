@@ -26,8 +26,7 @@ public:
     bool emptycheck();
     template <typename T2>
     friend ostream& operator<<(ostream& out, List<T2> list);
-    template <typename T1>
-    friend ostream& operator+(ostream& out, List<T1> list);
+    List<T> operator+(List a);
 };
 
 template <typename T>
@@ -91,21 +90,61 @@ ostream& operator<<(ostream& out, List<T> list)
     }
     return out;
 }
-/*template <typename T>
-ostream& operator+(ostream& out, List<T> list1, List<T> list2)
+template <typename T>
+List<T> List<T>::operator+(List l)
 {
-    Node<T>* ptr = list.head;
-    while (ptr){
-        out << ptr -> data << " ";
-        ptr = ptr-> next;
-   }
-    return out;
-}*/
+    List<T> new_list;
+    Node<T>* T1 = head;
+    while (T1 != nullptr && T1 -> next != nullptr)
+    {
+        new_list.push_back(T1 -> data);
+        T1 = T1 -> next;
+    }
+    if (T1 != nullptr){
+        new_list.push_back(T1 -> data);
+    }
+    Node<T>* T2 = l.head;
+    while (T2 != nullptr)
+    {
+        new_list.push_back(T2 -> data);
+        T2 = T2 -> next;
+    }
+
+    //List<T> copy_2 = l;
+    /*Node<T>* T1 = copy_1.head;
+    while(T1 != nullptr){
+        T1 = copy_1.head;
+        new_list.push_back(T1 -> data);
+        copy_1.pop_front();
+    }
+    
+    Node<T>* T2 = copy_2.head;
+    while(T2 != nullptr){
+        T2 = copy_2.head;
+        new_list.push_back(T2 -> data);
+        copy_2.pop_front();
+    }*/
+    return new_list;
+}
 
 int main(){
     List<int> mylist;
+    List<int> mylist1;
     mylist.push_front(42);
     mylist.push_front(21);
+    mylist.push_front(415);
+    mylist.push_front(324);
+    mylist.push_front(945);
+    mylist.push_front(124);
+    mylist1.push_front(213);
+    mylist1.push_front(41);
+    mylist1.push_front(75);
+    mylist1.push_front(123);
     mylist.pop_front();
+    mylist.pop_back();
     cout << mylist;
+    cout << mylist1;
+    List<int> new_list;
+    new_list = mylist1 + mylist;
+    cout << new_list;
 }
